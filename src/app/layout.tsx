@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "OnlineStore — Интернет-магазин",
-  description: "Онлайн-магазин с админ-панелью для управления товарами",
+  title: "THE VOLT — Интернет-магазин",
+  description: "THE VOLT — электроника, гаджеты, одежда и аксессуары",
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

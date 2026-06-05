@@ -37,7 +37,7 @@ export default function AdminLoginPage() {
       <form onSubmit={handleSubmit} className="card w-full max-w-md space-y-4 p-8">
         <div className="text-center">
           <h1 className="text-2xl font-bold">Админ-панель</h1>
-          <p className="mt-1 text-sm text-muted">OnlineStore</p>
+          <p className="mt-1 text-sm text-muted">THE VOLT</p>
         </div>
 
         {error && <p className="rounded-lg bg-red-50 p-3 text-sm text-red-600">{error}</p>}

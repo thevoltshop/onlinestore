@@ -5,7 +5,7 @@ export function Header() {
     <header className="sticky top-0 z-50 border-b border-border bg-card/95 backdrop-blur">
       <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-4">
         <Link href="/" className="text-xl font-bold text-primary">
-          OnlineStore
+          THE VOLT
         </Link>
         <nav className="flex items-center gap-6">
           <Link href="/products" className="text-sm font-medium hover:text-primary">

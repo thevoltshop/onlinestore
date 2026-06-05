@@ -70,17 +70,6 @@ export default function ContactsPage() {
             </div>
           </a>
 
-          {/* Адрес */}
-          <div className="card flex items-center gap-4 p-5 sm:col-span-2">
-            <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-green-100 text-2xl">
-              📍
-            </div>
-            <div>
-              <p className="text-sm text-muted">Адрес</p>
-              <p className="font-semibold">г. Келес, Ташкентская область</p>
-            </div>
-          </div>
-
         </div>
 
         {/* Часы работы */}

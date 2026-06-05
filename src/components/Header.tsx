@@ -14,6 +14,9 @@ export function Header() {
           <Link href="/cart" className="text-sm font-medium hover:text-primary">
             Корзина
           </Link>
+          <Link href="/contacts" className="text-sm font-medium hover:text-primary">
+            Контакты
+          </Link>
           <Link
             href="/admin"
             className="rounded-lg bg-primary px-3 py-1.5 text-sm font-medium text-white hover:bg-primary-dark"

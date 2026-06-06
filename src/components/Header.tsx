@@ -18,6 +18,14 @@ export function Header() {
           <Link href="/contacts" className="text-sm font-medium hover:text-primary">
             Контакты
           </Link>
+          <a
+            href="https://thevoltshop.github.io/my-site"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-sm font-medium hover:text-primary"
+          >
+            Помощь
+          </a>
           <ThemeToggle />
         </nav>
       </div>

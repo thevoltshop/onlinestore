@@ -27,6 +27,28 @@ async function main() {
     await prisma.product.updateMany({ where: { slug, sizes: null }, data: { sizes } });
   }
 
+  // Обновляем фотографии товаров до портретного формата 4:5 с высоким качеством
+  const imageMap: Record<string, string> = {
+    "dashcam-4k":              "https://images.unsplash.com/photo-1617788138017-80ad40651399?w=600&h=750&fit=crop&q=90",
+    "car-vacuum":              "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&h=750&fit=crop&q=90",
+    "car-freshener":           "https://images.unsplash.com/photo-1585771724684-38269d6639fd?w=600&h=750&fit=crop&q=90",
+    "gaming-headset":          "https://images.unsplash.com/photo-1599669454699-248893623440?w=600&h=750&fit=crop&q=90",
+    "gaming-mouse":            "https://images.unsplash.com/photo-1527864550417-7fd91fc51a46?w=600&h=750&fit=crop&q=90",
+    "gaming-keyboard":         "https://images.unsplash.com/photo-1541140532154-b024d705b90a?w=600&h=750&fit=crop&q=90",
+    "wireless-headphones-anc": "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=600&h=750&fit=crop&q=90",
+    "smartwatch-pro":          "https://images.unsplash.com/photo-1579586337278-3befd40fd17a?w=600&h=750&fit=crop&q=90",
+    "bluetooth-speaker":       "https://images.unsplash.com/photo-1608043152269-423dbba4e7e1?w=600&h=750&fit=crop&q=90",
+    "wireless-charger-15w":    "https://images.unsplash.com/photo-1586953208448-b95a79798f07?w=600&h=750&fit=crop&q=90",
+    "screen-protector-9h":     "https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?w=600&h=750&fit=crop&q=90",
+    "silicone-case-magsafe":   "https://images.unsplash.com/photo-1601784551446-20c9e07cdbdb?w=600&h=750&fit=crop&q=90",
+    "sport-sneakers":          "https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=600&h=750&fit=crop&q=90",
+    "oversized-hoodie":        "https://images.unsplash.com/photo-1556821840-3a63f95609a7?w=600&h=750&fit=crop&q=90",
+    "slim-fit-jeans":          "https://images.unsplash.com/photo-1542272604-787c3835535d?w=600&h=750&fit=crop&q=90",
+  };
+  for (const [slug, imageUrl] of Object.entries(imageMap)) {
+    await prisma.product.updateMany({ where: { slug }, data: { imageUrl } });
+  }
+
   // Пропускаем если цены уже обновлены до реальных UZS
   const dashcam = await prisma.product.findUnique({ where: { slug: "dashcam-4k" } });
   if (dashcam && dashcam.price >= 100000) {
@@ -67,7 +89,7 @@ async function main() {
       description: "Запись в разрешении 4K UHD, ночное видение Sony STARVIS, угол обзора 170°, встроенный GPS-трекер, датчик удара G-Sensor. Петлевая запись на карту до 256 ГБ.",
       price: 650000,
       stock: 20,
-      imageUrl: "https://images.unsplash.com/photo-1449824913935-59a10b8d2000?w=600&h=600&fit=crop",
+      imageUrl: "https://images.unsplash.com/photo-1449824913935-59a10b8d2000?w=600&h=750&fit=crop&q=90",
       categoryId: car?.id,
     },
     {
@@ -76,7 +98,7 @@ async function main() {
       description: "Мощный пылесос 120W для салона автомобиля. Питание от прикуривателя 12V, шнур 4.5м, сменные насадки, HEPA-фильтр. Убирает шерсть животных и крошки.",
       price: 250000,
       stock: 35,
-      imageUrl: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&h=600&fit=crop",
+      imageUrl: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&h=750&fit=crop&q=90",
       categoryId: car?.id,
     },
     {
@@ -85,7 +107,7 @@ async function main() {
       description: "Стильный диффузор с натуральными эфирными маслами. Крепится на дефлектор, устойчив к вибрации, не оставляет пятен. Аромат держится до 30 дней.",
       price: 55000,
       stock: 100,
-      imageUrl: "https://images.unsplash.com/photo-1585771724684-38269d6639fd?w=600&h=600&fit=crop",
+      imageUrl: "https://images.unsplash.com/photo-1585771724684-38269d6639fd?w=600&h=750&fit=crop&q=90",
       categoryId: car?.id,
     },
 
@@ -96,7 +118,7 @@ async function main() {
       description: "Объёмный звук 7.1, шумоподавляющий съёмный микрофон, RGB-подсветка, мягкие амбушюры с памятью формы. Совместимы с PC, PS5, Xbox Series X, Nintendo Switch.",
       price: 850000,
       stock: 15,
-      imageUrl: "https://images.unsplash.com/photo-1599669454699-248893623440?w=600&h=600&fit=crop",
+      imageUrl: "https://images.unsplash.com/photo-1599669454699-248893623440?w=600&h=750&fit=crop&q=90",
       categoryId: gaming?.id,
     },
     {
@@ -105,7 +127,7 @@ async function main() {
       description: "Оптический сенсор 16000 DPI, 8 программируемых кнопок, RGB-подсветка 16.8 млн цветов, плетёный провод 1.8м, вес 95г.",
       price: 420000,
       stock: 25,
-      imageUrl: "https://images.unsplash.com/photo-1527864550417-7fd91fc51a46?w=600&h=600&fit=crop",
+      imageUrl: "https://images.unsplash.com/photo-1527864550417-7fd91fc51a46?w=600&h=750&fit=crop&q=90",
       categoryId: gaming?.id,
     },
     {
@@ -114,7 +136,7 @@ async function main() {
       description: "Механические свитчи Blue, полноразмерная раскладка 104 клавиши, RGB-подсветка на каждую клавишу, алюминиевая панель, съёмный USB-C кабель.",
       price: 680000,
       stock: 18,
-      imageUrl: "https://images.unsplash.com/photo-1541140532154-b024d705b90a?w=600&h=600&fit=crop",
+      imageUrl: "https://images.unsplash.com/photo-1541140532154-b024d705b90a?w=600&h=750&fit=crop&q=90",
       categoryId: gaming?.id,
     },
 
@@ -125,7 +147,7 @@ async function main() {
       description: "Активное шумоподавление -35 дБ, Bluetooth 5.3, до 40 часов работы, быстрая зарядка (10 мин = 3 ч), мультиточечное подключение к 2 устройствам.",
       price: 1200000,
       stock: 20,
-      imageUrl: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=600&h=600&fit=crop",
+      imageUrl: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=600&h=750&fit=crop&q=90",
       categoryId: electronics?.id,
     },
     {
@@ -134,7 +156,7 @@ async function main() {
       description: "AMOLED 1.4\", ЧСС + SpO2 + ЭКГ, встроенный GPS, 100+ режимов тренировок, водозащита IP68, до 14 дней без зарядки.",
       price: 1800000,
       stock: 12,
-      imageUrl: "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=600&h=600&fit=crop",
+      imageUrl: "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=600&h=750&fit=crop&q=90",
       categoryId: electronics?.id,
     },
     {
@@ -143,7 +165,7 @@ async function main() {
       description: "Мощность 20W стерео, 360° звук с глубоким басом, IPX7 водозащита, 24 часа работы, встроенный микрофон, TWS-режим (2 колонки = один звук).",
       price: 490000,
       stock: 30,
-      imageUrl: "https://images.unsplash.com/photo-1608043152269-423dbba4e7e1?w=600&h=600&fit=crop",
+      imageUrl: "https://images.unsplash.com/photo-1608043152269-423dbba4e7e1?w=600&h=750&fit=crop&q=90",
       categoryId: electronics?.id,
     },
 
@@ -154,7 +176,7 @@ async function main() {
       description: "15W для Samsung, MagSafe 15W для iPhone, 10W для других Qi-устройств. Заряжает через чехол до 3мм, индикатор заряда, защита от перегрева.",
       price: 220000,
       stock: 40,
-      imageUrl: "https://images.unsplash.com/photo-1586953208448-b95a79798f07?w=600&h=600&fit=crop",
+      imageUrl: "https://images.unsplash.com/photo-1586953208448-b95a79798f07?w=600&h=750&fit=crop&q=90",
       categoryId: phone?.id,
     },
     {
@@ -163,7 +185,7 @@ async function main() {
       description: "Твёрдость 9H, антишпионское покрытие (видно только смотрящему прямо), олеофобное покрытие, полный клей по краям, ультратонкое 0.26мм.",
       price: 45000,
       stock: 150,
-      imageUrl: "https://images.unsplash.com/photo-1585060544812-6b45742d762f?w=600&h=600&fit=crop",
+      imageUrl: "https://images.unsplash.com/photo-1585060544812-6b45742d762f?w=600&h=750&fit=crop&q=90",
       categoryId: phone?.id,
     },
     {
@@ -172,7 +194,7 @@ async function main() {
       description: "Премиум жидкий силикон, встроенные магниты MagSafe 15W, защита камеры +1.5мм, бархатистое покрытие внутри. 12 цветов, iPhone 14/15/16.",
       price: 130000,
       stock: 80,
-      imageUrl: "https://images.unsplash.com/photo-1601784551446-20c9e07cdbdb?w=600&h=600&fit=crop",
+      imageUrl: "https://images.unsplash.com/photo-1601784551446-20c9e07cdbdb?w=600&h=750&fit=crop&q=90",
       categoryId: phone?.id,
     },
 
@@ -183,7 +205,7 @@ async function main() {
       description: "Дышащий сетчатый верх, амортизирующая подошва EVA с воздушными камерами, нескользящий протектор, рефлективные элементы безопасности. Размеры 36–46.",
       price: 980000,
       stock: 25,
-      imageUrl: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=600&h=600&fit=crop",
+      imageUrl: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=600&h=750&fit=crop&q=90",
       categoryId: clothing?.id,
       sizes: "36,37,38,39,40,41,42,43,44,45,46",
     },
@@ -193,7 +215,7 @@ async function main() {
       description: "100% хлопок 350г/м², крой оверсайз, регулируемый капюшон на кулиске, карман-кенгуру, рибана на манжетах. Не садится после стирки. XS–XXL.",
       price: 450000,
       stock: 40,
-      imageUrl: "https://images.unsplash.com/photo-1556821840-3a63f95609a7?w=600&h=600&fit=crop",
+      imageUrl: "https://images.unsplash.com/photo-1556821840-3a63f95609a7?w=600&h=750&fit=crop&q=90",
       categoryId: clothing?.id,
       sizes: "XS,S,M,L,XL,XXL",
     },
@@ -203,7 +225,7 @@ async function main() {
       description: "Стрейч-деним 98% хлопок 2% эластан, облегающий силуэт slim fit, 5 карманов, усиленные швы. Не вытягиваются при носке. Размеры 26–36.",
       price: 620000,
       stock: 30,
-      imageUrl: "https://images.unsplash.com/photo-1542272604-787c3835535d?w=600&h=600&fit=crop",
+      imageUrl: "https://images.unsplash.com/photo-1542272604-787c3835535d?w=600&h=750&fit=crop&q=90",
       categoryId: clothing?.id,
       sizes: "26,27,28,29,30,31,32,33,34,36",
     },

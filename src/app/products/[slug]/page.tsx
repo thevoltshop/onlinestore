@@ -7,6 +7,7 @@ import { SizeSelector } from "@/components/SizeSelector";
 import { ReviewForm } from "@/components/ReviewForm";
 import { prisma } from "@/lib/db";
 import { formatPrice } from "@/lib/auth";
+import { ProductCard } from "@/components/ProductCard";
 
 type Props = { params: Promise<{ slug: string }> };
 
@@ -37,6 +38,14 @@ export default async function ProductPage({ params }: Props) {
     product.reviews.length > 0
       ? product.reviews.reduce((s, r) => s + r.rating, 0) / product.reviews.length
       : null;
+
+  const similar = product.categoryId
+    ? await prisma.product.findMany({
+        where: { categoryId: product.categoryId, isActive: true, NOT: { id: product.id } },
+        include: { category: true, reviews: { select: { rating: true } } },
+        take: 4,
+      })
+    : [];
 
   return (
     <div>
@@ -110,6 +119,35 @@ export default async function ProductPage({ params }: Props) {
             </div>
           </div>
         </div>
+
+        {/* Похожие товары */}
+        {similar.length > 0 && (
+          <section className="mt-12">
+            <h2 className="mb-6 text-2xl font-bold">Похожие товары</h2>
+            <div className="grid grid-cols-2 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+              {similar.map((p) => {
+                const avg = p.reviews.length
+                  ? p.reviews.reduce((s, r) => s + r.rating, 0) / p.reviews.length
+                  : null;
+                return (
+                  <ProductCard
+                    key={p.id}
+                    id={p.id}
+                    name={p.name}
+                    slug={p.slug}
+                    price={p.price}
+                    imageUrl={p.imageUrl}
+                    categoryName={p.category?.name}
+                    avgRating={avg}
+                    reviewCount={p.reviews.length}
+                    description={p.description ?? ""}
+                    stock={p.stock}
+                  />
+                );
+              })}
+            </div>
+          </section>
+        )}
 
         {/* Отзывы */}
         <section className="mt-12">

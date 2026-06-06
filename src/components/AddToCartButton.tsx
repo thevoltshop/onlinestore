@@ -26,6 +26,7 @@ export function AddToCartButton({ productId, name, price, imageUrl, stock }: Pro
     }
 
     localStorage.setItem("cart", JSON.stringify(cart));
+    window.dispatchEvent(new Event("cartUpdated"));
     setAdded(true);
     setTimeout(() => setAdded(false), 2000);
   }

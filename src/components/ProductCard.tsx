@@ -1,6 +1,8 @@
 import Link from "next/link";
 import Image from "next/image";
 import { formatPrice } from "@/lib/auth";
+import { FavoriteButton } from "./FavoriteButton";
+import { QuickView } from "./QuickView";
 
 type ProductCardProps = {
   id: string;
@@ -11,9 +13,12 @@ type ProductCardProps = {
   categoryName?: string | null;
   avgRating?: number | null;
   reviewCount?: number;
+  description?: string;
+  stock?: number;
 };
 
 export function ProductCard({
+  id,
   name,
   slug,
   price,
@@ -21,9 +26,11 @@ export function ProductCard({
   categoryName,
   avgRating,
   reviewCount,
+  description = "",
+  stock = 0,
 }: ProductCardProps) {
   return (
-    <Link href={`/products/${slug}`} className="card group overflow-hidden transition hover:shadow-md">
+    <Link href={`/products/${slug}`} className="card group relative overflow-hidden transition hover:shadow-md">
       <div className="relative aspect-square bg-gray-100">
         {imageUrl ? (
           <Image
@@ -36,7 +43,12 @@ export function ProductCard({
         ) : (
           <div className="flex h-full items-center justify-center text-muted">Нет фото</div>
         )}
+
+        <FavoriteButton productId={id} />
+        <QuickView id={id} name={name} slug={slug} price={price}
+          imageUrl={imageUrl} stock={stock} description={description} />
       </div>
+
       <div className="p-4">
         {categoryName && (
           <span className="text-xs font-medium uppercase tracking-wide text-muted">

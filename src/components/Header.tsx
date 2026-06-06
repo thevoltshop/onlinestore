@@ -1,6 +1,8 @@
 import Link from "next/link";
 import { ThemeToggle } from "./ThemeToggle";
 import { MobileNav } from "./MobileNav";
+import { CartCounter } from "./CartCounter";
+import { SearchBar } from "./SearchBar";
 
 export function Header() {
   return (
@@ -26,19 +28,16 @@ export function Header() {
 
       {/* Шапка */}
       <header className="border-b border-border bg-card/95 backdrop-blur">
-        <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3">
+        <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-3">
 
           {/* Логотип */}
-          <Link href="/" className="text-xl font-bold text-primary">
+          <Link href="/" className="shrink-0 text-xl font-bold text-primary">
             THE ARX
           </Link>
 
-          {/* Центр — слоган (только десктоп) */}
-          <div className="hidden md:block text-center">
-            <span className="animate-pulse text-lg">⚡</span>
-            <span className="ml-1 text-sm font-semibold tracking-wide">
-              Заряди свою жизнь
-            </span>
+          {/* Поиск (только десктоп) */}
+          <div className="hidden md:block flex-1 max-w-xs">
+            <SearchBar />
           </div>
 
           {/* Десктопная навигация */}
@@ -46,9 +45,10 @@ export function Header() {
             <Link href="/products" className="text-sm font-medium hover:text-primary">
               Каталог
             </Link>
-            <Link href="/cart" className="text-sm font-medium hover:text-primary">
-              Корзина
+            <Link href="/favorites" className="text-sm font-medium hover:text-primary">
+              Избранное
             </Link>
+            <CartCounter />
             <Link href="/contacts" className="text-sm font-medium hover:text-primary">
               Контакты
             </Link>
@@ -66,6 +66,7 @@ export function Header() {
           {/* Мобильная навигация */}
           <div className="flex md:hidden items-center gap-3">
             <ThemeToggle />
+            <CartCounter />
             <MobileNav />
           </div>
 

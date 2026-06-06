@@ -21,10 +21,11 @@ export function MobileNav() {
 
       {/* Дропдаун */}
       {open && (
-        <div className="absolute right-0 top-12 z-50 w-48 rounded-xl border border-border bg-card p-2 shadow-lg">
+        <div className="absolute right-0 top-12 z-50 w-52 rounded-xl border border-border bg-card p-2 shadow-lg">
           {[
             { href: "/products", label: "Каталог" },
-            { href: "/cart", label: "Корзина" },
+            { href: "/favorites", label: "🤍 Избранное" },
+            { href: "/cart", label: "🛒 Корзина" },
             { href: "/contacts", label: "Контакты" },
           ].map((item) => (
             <Link

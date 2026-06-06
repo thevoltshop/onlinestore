@@ -26,10 +26,17 @@ export function FavoriteButton({ productId }: { productId: string }) {
     <button
       onClick={toggle}
       aria-label="В избранное"
-      className="absolute right-2 top-2 flex h-8 w-8 items-center justify-center rounded-full bg-white/90 shadow transition hover:scale-110"
+      className="absolute right-2.5 top-2.5 flex h-9 w-9 items-center justify-center rounded-full bg-white/80 shadow-md backdrop-blur-sm transition-all duration-200 hover:scale-110 hover:bg-white"
     >
-      <span className={isFav ? "text-red-500" : "text-gray-300"} style={{ fontSize: 18 }}>
-        ♥
+      <span
+        className="transition-colors duration-200"
+        style={{
+          fontSize: 18,
+          color: isFav ? "#ef4444" : "#9ca3af",
+          filter: isFav ? "drop-shadow(0 0 4px rgba(239,68,68,0.5))" : "none",
+        }}
+      >
+        {isFav ? "♥" : "♡"}
       </span>
     </button>
   );

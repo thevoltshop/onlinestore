@@ -18,7 +18,7 @@ export function QuickView(props: Props) {
     <>
       <button
         onClick={(e) => { e.preventDefault(); e.stopPropagation(); setOpen(true); }}
-        className="absolute bottom-2 left-1/2 -translate-x-1/2 whitespace-nowrap rounded-xl bg-white/90 px-3 py-1 text-xs font-semibold shadow opacity-0 group-hover:opacity-100 transition-opacity"
+        className="absolute bottom-14 left-1/2 -translate-x-1/2 whitespace-nowrap rounded-full bg-white/90 px-4 py-1.5 text-xs font-bold shadow-lg backdrop-blur-sm opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300"
       >
         👁 Быстрый просмотр
       </button>

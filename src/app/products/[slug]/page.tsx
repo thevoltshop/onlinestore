@@ -88,21 +88,25 @@ export default async function ProductPage({ params }: Props) {
             </p>
             <p className="leading-relaxed">{product.description}</p>
 
-            {/* Размеры (только для одежды/обуви) */}
-            {product.sizes && (
-              <div className="border-t border-border pt-4">
-                <SizeSelector sizes={product.sizes} />
-              </div>
-            )}
-
             <div className="border-t border-border pt-4">
-              <AddToCartButton
-                productId={product.id}
-                name={product.name}
-                price={product.price}
-                imageUrl={product.imageUrl}
-                stock={product.stock}
-              />
+              {product.sizes ? (
+                <SizeSelector
+                  sizes={product.sizes}
+                  productId={product.id}
+                  name={product.name}
+                  price={product.price}
+                  imageUrl={product.imageUrl}
+                  stock={product.stock}
+                />
+              ) : (
+                <AddToCartButton
+                  productId={product.id}
+                  name={product.name}
+                  price={product.price}
+                  imageUrl={product.imageUrl}
+                  stock={product.stock}
+                />
+              )}
             </div>
           </div>
         </div>

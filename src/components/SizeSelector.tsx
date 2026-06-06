@@ -39,43 +39,52 @@ export function SizeSelector({ sizes, productId, name, price, imageUrl, stock }:
 
   return (
     <div className="space-y-4">
-      {/* Размеры */}
-      <div>
-        <p className="mb-2 text-sm font-medium">
-          Размер:{" "}
-          {selected
-            ? <span className="font-bold text-primary">{selected}</span>
-            : <span className="text-muted">выберите размер</span>}
-        </p>
-        <div className="flex flex-wrap gap-2">
-          {list.map((size) => (
+      {/* Лейбл */}
+      <p className="text-sm font-medium text-muted">
+        Размер одежды:{" "}
+        {selected && <span className="font-bold text-foreground">{selected}</span>}
+      </p>
+
+      {/* Кнопки размеров */}
+      <div className="flex flex-wrap gap-2">
+        {list.map((size) => {
+          const isSelected = selected === size;
+          return (
             <button
               key={size}
               onClick={() => setSelected(size === selected ? null : size)}
-              className={`min-w-[44px] rounded-lg border px-3 py-1.5 text-sm font-semibold transition ${
-                selected === size
-                  ? "border-primary bg-primary text-white"
-                  : "border-border hover:border-primary"
+              className={`flex h-11 min-w-[44px] items-center justify-center rounded-2xl border-2 px-3 text-sm font-semibold transition-all ${
+                isSelected
+                  ? "border-foreground bg-transparent text-foreground scale-105"
+                  : "border-border hover:border-foreground/50 text-foreground"
               }`}
             >
               {size}
             </button>
-          ))}
-        </div>
+          );
+        })}
       </div>
 
       {/* Кнопка корзины */}
       {stock <= 0 ? (
-        <button disabled className="btn btn-secondary w-full opacity-50">
+        <button disabled className="btn w-full rounded-2xl bg-gray-300 py-4 text-gray-500 cursor-not-allowed font-semibold">
           Нет в наличии
         </button>
       ) : (
         <button
           onClick={addToCart}
           disabled={!selected}
-          className={`btn btn-primary w-full transition ${!selected ? "opacity-50 cursor-not-allowed" : ""}`}
+          className={`btn w-full rounded-2xl py-4 text-base font-semibold transition-all ${
+            selected
+              ? "bg-primary text-white hover:bg-primary-dark"
+              : "bg-gray-200 text-gray-400 cursor-not-allowed"
+          }`}
         >
-          {added ? "Добавлено ✓" : selected ? `В корзину — размер ${selected}` : "Выберите размер"}
+          {added
+            ? "Добавлено в корзину ✓"
+            : selected
+            ? "В корзину"
+            : "Выберите размер"}
         </button>
       )}
     </div>

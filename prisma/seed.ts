@@ -17,10 +17,20 @@ async function main() {
     },
   });
 
+  // Обновляем размеры для одежды/обуви если их нет
+  const sizesMap: Record<string, string> = {
+    "sport-sneakers":  "36,37,38,39,40,41,42,43,44,45,46",
+    "oversized-hoodie": "XS,S,M,L,XL,XXL",
+    "slim-fit-jeans":   "26,27,28,29,30,31,32,33,34,36",
+  };
+  for (const [slug, sizes] of Object.entries(sizesMap)) {
+    await prisma.product.updateMany({ where: { slug, sizes: null }, data: { sizes } });
+  }
+
   // Пропускаем если цены уже обновлены до реальных UZS
   const dashcam = await prisma.product.findUnique({ where: { slug: "dashcam-4k" } });
   if (dashcam && dashcam.price >= 100000) {
-    console.log("Данные уже актуальны. Пропуск.");
+    console.log("Данные уже актуальны. Размеры обновлены.");
     return;
   }
 

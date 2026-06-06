@@ -27,22 +27,37 @@ async function main() {
     await prisma.product.updateMany({ where: { slug, sizes: null }, data: { sizes } });
   }
 
-  // Обновляем фотографии товаров до портретного формата 4:5 с высоким качеством
+  // Обновляем фотографии товаров — проверенные Unsplash ID, формат 4:5, q=90
   const imageMap: Record<string, string> = {
-    "dashcam-4k":              "https://images.unsplash.com/photo-1617788138017-80ad40651399?w=600&h=750&fit=crop&q=90",
-    "car-vacuum":              "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&h=750&fit=crop&q=90",
-    "car-freshener":           "https://images.unsplash.com/photo-1585771724684-38269d6639fd?w=600&h=750&fit=crop&q=90",
-    "gaming-headset":          "https://images.unsplash.com/photo-1599669454699-248893623440?w=600&h=750&fit=crop&q=90",
-    "gaming-mouse":            "https://images.unsplash.com/photo-1527864550417-7fd91fc51a46?w=600&h=750&fit=crop&q=90",
-    "gaming-keyboard":         "https://images.unsplash.com/photo-1541140532154-b024d705b90a?w=600&h=750&fit=crop&q=90",
+    // Видеорегистратор прикреплён к лобовому стеклу в авто
+    "dashcam-4k":              "https://images.unsplash.com/photo-1716738547734-fb7cb39c5b2e?w=600&h=750&fit=crop&q=90",
+    // Современный беспроводной пылесос на жёлтом фоне
+    "car-vacuum":              "https://images.unsplash.com/photo-1746645297698-306ef29852ca?w=600&h=750&fit=crop&q=90",
+    // Стеклянный диффузор с тростниковыми палочками
+    "car-freshener":           "https://images.unsplash.com/photo-1607047411619-12ca1b2b72c4?w=600&h=750&fit=crop&q=90",
+    // Чёрно-красная игровая гарнитура на белом столе
+    "gaming-headset":          "https://images.unsplash.com/photo-1610041321327-b794c052db27?w=600&h=750&fit=crop&q=90",
+    // Чёрная игровая мышь с синей RGB-подсветкой
+    "gaming-mouse":            "https://images.unsplash.com/photo-1756928626825-1a87f0e3e822?w=600&h=750&fit=crop&q=90",
+    // Крупный план разноцветной RGB-клавиатуры
+    "gaming-keyboard":         "https://images.unsplash.com/photo-1756694938594-e760b4bd3bfb?w=600&h=750&fit=crop&q=90",
+    // Sony WH-1000XM flatlay — жёлтый фон
     "wireless-headphones-anc": "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=600&h=750&fit=crop&q=90",
-    "smartwatch-pro":          "https://images.unsplash.com/photo-1579586337278-3befd40fd17a?w=600&h=750&fit=crop&q=90",
-    "bluetooth-speaker":       "https://images.unsplash.com/photo-1608043152269-423dbba4e7e1?w=600&h=750&fit=crop&q=90",
+    // Чёрные смарт-часы крупным планом
+    "smartwatch-pro":          "https://images.unsplash.com/photo-1568752172055-6961c4146efd?w=600&h=750&fit=crop&q=90",
+    // Серая Beats by Dr.Dre портативная колонка
+    "bluetooth-speaker":       "https://images.unsplash.com/photo-1520390244437-6f1c5eae66ff?w=600&h=750&fit=crop&q=90",
+    // Беспроводная зарядка с телефоном
     "wireless-charger-15w":    "https://images.unsplash.com/photo-1586953208448-b95a79798f07?w=600&h=750&fit=crop&q=90",
+    // Смартфон flat lay
     "screen-protector-9h":     "https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?w=600&h=750&fit=crop&q=90",
-    "silicone-case-magsafe":   "https://images.unsplash.com/photo-1601784551446-20c9e07cdbdb?w=600&h=750&fit=crop&q=90",
-    "sport-sneakers":          "https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=600&h=750&fit=crop&q=90",
-    "oversized-hoodie":        "https://images.unsplash.com/photo-1556821840-3a63f95609a7?w=600&h=750&fit=crop&q=90",
+    // Синий чехол для iPhone на столе
+    "silicone-case-magsafe":   "https://images.unsplash.com/photo-1567428486597-8c5328fd3816?w=600&h=750&fit=crop&q=90",
+    // Nike Air Max 90 красно-белые в руках
+    "sport-sneakers":          "https://images.unsplash.com/photo-1628529791722-b25aee45973f?w=600&h=750&fit=crop&q=90",
+    // Человек в худи у здания — streetwear
+    "oversized-hoodie":        "https://images.unsplash.com/photo-1506451854428-e72f199b79db?w=600&h=750&fit=crop&q=90",
+    // Джинсы slim fit
     "slim-fit-jeans":          "https://images.unsplash.com/photo-1542272604-787c3835535d?w=600&h=750&fit=crop&q=90",
   };
   for (const [slug, imageUrl] of Object.entries(imageMap)) {

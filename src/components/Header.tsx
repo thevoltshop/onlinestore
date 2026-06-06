@@ -1,46 +1,48 @@
 import Link from "next/link";
 import { ThemeToggle } from "./ThemeToggle";
+import { MobileNav } from "./MobileNav";
 
 export function Header() {
   return (
     <div className="sticky top-0 z-50">
+
       {/* Бегущая строка */}
       <div className="overflow-hidden bg-primary py-1.5 text-white">
         <div className="animate-marquee whitespace-nowrap text-xs font-medium">
-          ⚡ Добро пожаловать в THE VOLT &nbsp;&nbsp;•&nbsp;&nbsp;
-          🎮 Игровая периферия &nbsp;&nbsp;•&nbsp;&nbsp;
-          📱 Аксессуары для телефона &nbsp;&nbsp;•&nbsp;&nbsp;
-          🚗 Товары для авто &nbsp;&nbsp;•&nbsp;&nbsp;
-          🎧 Электроника и гаджеты &nbsp;&nbsp;•&nbsp;&nbsp;
-          👟 Одежда и обувь &nbsp;&nbsp;•&nbsp;&nbsp;
-          ⚡ Добро пожаловать в THE VOLT &nbsp;&nbsp;•&nbsp;&nbsp;
-          🎮 Игровая периферия &nbsp;&nbsp;•&nbsp;&nbsp;
-          📱 Аксессуары для телефона &nbsp;&nbsp;•&nbsp;&nbsp;
-          🚗 Товары для авто &nbsp;&nbsp;•&nbsp;&nbsp;
-          🎧 Электроника и гаджеты &nbsp;&nbsp;•&nbsp;&nbsp;
+          ⚡ Добро пожаловать в THE VOLT &nbsp;•&nbsp;
+          🎮 Игровая периферия &nbsp;•&nbsp;
+          📱 Аксессуары для телефона &nbsp;•&nbsp;
+          🚗 Товары для авто &nbsp;•&nbsp;
+          🎧 Электроника и гаджеты &nbsp;•&nbsp;
+          👟 Одежда и обувь &nbsp;•&nbsp;
+          ⚡ Добро пожаловать в THE VOLT &nbsp;•&nbsp;
+          🎮 Игровая периферия &nbsp;•&nbsp;
+          📱 Аксессуары для телефона &nbsp;•&nbsp;
+          🚗 Товары для авто &nbsp;•&nbsp;
+          🎧 Электроника и гаджеты &nbsp;•&nbsp;
           👟 Одежда и обувь
         </div>
       </div>
 
-      {/* Основная шапка */}
+      {/* Шапка */}
       <header className="border-b border-border bg-card/95 backdrop-blur">
-        <div className="mx-auto grid max-w-7xl grid-cols-3 items-center px-4 py-3">
+        <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3">
 
           {/* Логотип */}
           <Link href="/" className="text-xl font-bold text-primary">
             THE VOLT
           </Link>
 
-          {/* Центр — слоган */}
-          <div className="hidden text-center sm:block">
+          {/* Центр — слоган (только десктоп) */}
+          <div className="hidden md:block text-center">
             <span className="animate-pulse text-lg">⚡</span>
             <span className="ml-1 text-sm font-semibold tracking-wide">
               Заряди свою жизнь
             </span>
           </div>
 
-          {/* Навигация */}
-          <nav className="flex items-center justify-end gap-5">
+          {/* Десктопная навигация */}
+          <nav className="hidden md:flex items-center gap-5">
             <Link href="/products" className="text-sm font-medium hover:text-primary">
               Каталог
             </Link>
@@ -60,6 +62,12 @@ export function Header() {
             </a>
             <ThemeToggle />
           </nav>
+
+          {/* Мобильная навигация */}
+          <div className="flex md:hidden items-center gap-3">
+            <ThemeToggle />
+            <MobileNav />
+          </div>
 
         </div>
       </header>

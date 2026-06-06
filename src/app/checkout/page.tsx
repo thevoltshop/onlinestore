@@ -1,15 +1,20 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { Header } from "@/components/Header";
 import type { Cart } from "@/lib/types";
 
 function formatPrice(price: number) {
-  return new Intl.NumberFormat("ru-RU", {
-    maximumFractionDigits: 0,
-  }).format(price) + " сум";
+  return new Intl.NumberFormat("ru-RU", { maximumFractionDigits: 0 }).format(price) + " сум";
+}
+
+function buildPaymeUrl(orderId: string, totalSum: number): string {
+  const merchantId = process.env.NEXT_PUBLIC_PAYME_MERCHANT_ID ?? "";
+  const tiyin = Math.round(totalSum * 100);
+  const raw = `m=${merchantId};ac.order_id=${orderId};a=${tiyin}`;
+  return `https://checkout.paycom.uz/${btoa(raw)}`;
 }
 
 export default function CheckoutPage() {
@@ -17,7 +22,7 @@ export default function CheckoutPage() {
   const [cart, setCart] = useState<Cart>({ items: [] });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
-  const [success, setSuccess] = useState("");
+  const [order, setOrder] = useState<{ id: string; orderNumber: string; total: number } | null>(null);
 
   const [form, setForm] = useState({
     customerName: "",
@@ -44,10 +49,7 @@ export default function CheckoutPage() {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         ...form,
-        items: cart.items.map((i) => ({
-          productId: i.productId,
-          quantity: i.quantity,
-        })),
+        items: cart.items.map((i) => ({ productId: i.productId, quantity: i.quantity })),
       }),
     });
 
@@ -60,11 +62,11 @@ export default function CheckoutPage() {
     }
 
     localStorage.removeItem("cart");
-    setSuccess(`Заказ ${data.orderNumber} успешно оформлен!`);
-    setTimeout(() => router.push("/"), 3000);
+    setOrder({ id: data.id, orderNumber: data.orderNumber, total: data.total });
   }
 
-  if (cart.items.length === 0 && !success) {
+  // Корзина пуста и заказ ещё не оформлен
+  if (cart.items.length === 0 && !order) {
     return (
       <div>
         <Header />
@@ -78,21 +80,43 @@ export default function CheckoutPage() {
     );
   }
 
-  if (success) {
+  // Заказ оформлен — выбор способа оплаты
+  if (order) {
+    const paymeUrl = buildPaymeUrl(order.id, order.total);
     return (
       <div>
         <Header />
-        <main className="mx-auto max-w-lg px-4 py-16 text-center">
-          <div className="card p-8">
-            <p className="text-2xl font-bold text-green-600">✓</p>
-            <p className="mt-4 text-lg font-semibold">{success}</p>
-            <p className="mt-2 text-sm text-muted">Перенаправление на главную...</p>
+        <main className="mx-auto max-w-lg px-4 py-16">
+          <div className="card space-y-5 p-8 text-center">
+            <div className="text-5xl">✓</div>
+            <h2 className="text-xl font-bold">Заказ {order.orderNumber} оформлен!</h2>
+            <p className="text-muted">Сумма: {formatPrice(order.total)}</p>
+            <p className="text-sm text-muted">Выберите способ оплаты</p>
+
+            <div className="space-y-3 pt-2">
+              <a
+                href={paymeUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn btn-primary flex w-full items-center justify-center gap-2"
+              >
+                <span>Оплатить через Payme</span>
+              </a>
+
+              <button
+                onClick={() => router.push("/")}
+                className="btn w-full border border-border hover:border-primary"
+              >
+                Оплачу при получении
+              </button>
+            </div>
           </div>
         </main>
       </div>
     );
   }
 
+  // Форма оформления
   return (
     <div>
       <Header />

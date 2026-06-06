@@ -42,18 +42,33 @@ model Product {
 }
 
 model Order {
-  id           String      @id @default(cuid())
-  orderNumber  String      @unique
-  status       String      @default("pending")
-  customerName String
+  id            String             @id @default(cuid())
+  orderNumber   String             @unique
+  status        String             @default("pending")
+  paymentStatus String             @default("unpaid")
+  customerName  String
   customerEmail String
   customerPhone String?
-  address      String
-  total        Float
-  notes        String?
-  items        OrderItem[]
-  createdAt    DateTime    @default(now())
-  updatedAt    DateTime    @updatedAt
+  address       String
+  total         Float
+  notes         String?
+  items         OrderItem[]
+  transactions  PaymeTransaction[]
+  createdAt     DateTime           @default(now())
+  updatedAt     DateTime           @updatedAt
+}
+
+model PaymeTransaction {
+  id            String    @id @default(cuid())
+  transactionId String    @unique
+  orderId       String
+  order         Order     @relation(fields: [orderId], references: [id])
+  state         Int
+  amount        Float
+  reason        Int?
+  createdAt     DateTime  @default(now())
+  performedAt   DateTime?
+  cancelledAt   DateTime?
 }
 
 model OrderItem {

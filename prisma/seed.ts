@@ -175,6 +175,7 @@ async function main() {
       stock: 25,
       imageUrl: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=600&h=600&fit=crop",
       categoryId: clothing?.id,
+      sizes: "36,37,38,39,40,41,42,43,44,45,46",
     },
     {
       name: "Худи оверсайз Essentials",
@@ -184,6 +185,7 @@ async function main() {
       stock: 40,
       imageUrl: "https://images.unsplash.com/photo-1556821840-3a63f95609a7?w=600&h=600&fit=crop",
       categoryId: clothing?.id,
+      sizes: "XS,S,M,L,XL,XXL",
     },
     {
       name: "Джинсы Slim Fit Premium",
@@ -193,6 +195,7 @@ async function main() {
       stock: 30,
       imageUrl: "https://images.unsplash.com/photo-1542272604-787c3835535d?w=600&h=600&fit=crop",
       categoryId: clothing?.id,
+      sizes: "26,27,28,29,30,31,32,33,34,36",
     },
   ];
 

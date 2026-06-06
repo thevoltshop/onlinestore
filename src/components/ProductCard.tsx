@@ -9,6 +9,8 @@ type ProductCardProps = {
   price: number;
   imageUrl?: string | null;
   categoryName?: string | null;
+  avgRating?: number | null;
+  reviewCount?: number;
 };
 
 export function ProductCard({
@@ -17,6 +19,8 @@ export function ProductCard({
   price,
   imageUrl,
   categoryName,
+  avgRating,
+  reviewCount,
 }: ProductCardProps) {
   return (
     <Link href={`/products/${slug}`} className="card group overflow-hidden transition hover:shadow-md">
@@ -41,6 +45,15 @@ export function ProductCard({
         )}
         <h3 className="mt-1 font-semibold group-hover:text-primary">{name}</h3>
         <p className="mt-2 text-lg font-bold text-primary">{formatPrice(price)}</p>
+
+        {avgRating != null && (
+          <div className="mt-1.5 flex items-center gap-1">
+            <span className="text-sm text-yellow-400">
+              {"★".repeat(Math.round(avgRating))}{"☆".repeat(5 - Math.round(avgRating))}
+            </span>
+            <span className="text-xs text-muted">{reviewCount}</span>
+          </div>
+        )}
       </div>
     </Link>
   );

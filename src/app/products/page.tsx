@@ -14,7 +14,7 @@ export default async function ProductsPage({ searchParams }: Props) {
       isActive: true,
       ...(category ? { category: { slug: category } } : {}),
     },
-    include: { category: true },
+    include: { category: true, reviews: { select: { rating: true } } },
     orderBy: { name: "asc" },
   });
 
@@ -49,17 +49,24 @@ export default async function ProductsPage({ searchParams }: Props) {
         </div>
 
         <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-          {products.map((product) => (
-            <ProductCard
-              key={product.id}
-              id={product.id}
-              name={product.name}
-              slug={product.slug}
-              price={product.price}
-              imageUrl={product.imageUrl}
-              categoryName={product.category?.name}
-            />
-          ))}
+          {products.map((product) => {
+            const avg = product.reviews.length
+              ? product.reviews.reduce((s, r) => s + r.rating, 0) / product.reviews.length
+              : null;
+            return (
+              <ProductCard
+                key={product.id}
+                id={product.id}
+                name={product.name}
+                slug={product.slug}
+                price={product.price}
+                imageUrl={product.imageUrl}
+                categoryName={product.category?.name}
+                avgRating={avg}
+                reviewCount={product.reviews.length}
+              />
+            );
+          })}
         </div>
 
         {products.length === 0 && (

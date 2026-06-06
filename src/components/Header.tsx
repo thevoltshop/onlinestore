@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { ThemeToggle } from "./ThemeToggle";
 
 export function Header() {
   return (
@@ -17,6 +18,7 @@ export function Header() {
           <Link href="/contacts" className="text-sm font-medium hover:text-primary">
             Контакты
           </Link>
+          <ThemeToggle />
         </nav>
       </div>
     </header>

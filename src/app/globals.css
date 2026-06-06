@@ -11,6 +11,33 @@
   --muted: #6b7280;
 }
 
+.dark {
+  --background: #0f172a;
+  --foreground: #f1f5f9;
+  --primary: #3b82f6;
+  --primary-dark: #2563eb;
+  --card: #1e293b;
+  --border: #334155;
+  --muted: #94a3b8;
+}
+
+.dark input,
+.dark select,
+.dark textarea {
+  background: #1e293b;
+  color: #f1f5f9;
+  border-color: #334155;
+}
+
+.dark .btn-secondary {
+  background: #1e293b;
+  color: #f1f5f9;
+}
+
+.dark .btn-secondary:hover {
+  background: #334155;
+}
+
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);

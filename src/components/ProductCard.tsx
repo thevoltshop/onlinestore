@@ -1,6 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
-import { formatPrice } from "@/lib/auth";
+import { formatPrice } from "@/lib/utils";
 import { FavoriteButton } from "./FavoriteButton";
 import { QuickView } from "./QuickView";
 

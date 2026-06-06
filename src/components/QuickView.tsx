@@ -4,7 +4,7 @@ import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { AddToCartButton } from "./AddToCartButton";
-import { formatPrice } from "@/lib/auth";
+import { formatPrice } from "@/lib/utils";
 
 type Props = {
   id: string; name: string; slug: string; price: number;

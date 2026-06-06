@@ -19,7 +19,7 @@ export default async function HomePage() {
       <main>
         <section className="bg-gradient-to-br from-primary to-primary-dark px-4 py-16 text-white">
           <div className="mx-auto max-w-7xl">
-            <h1 className="text-4xl font-bold md:text-5xl">Добро пожаловать в THE VOLT</h1>
+            <h1 className="text-4xl font-bold md:text-5xl">Добро пожаловать в THE ARX</h1>
             <p className="mt-4 max-w-xl text-lg text-blue-100">
               Электроника, гаджеты, аксессуары и одежда с быстрой доставкой по Узбекистану.
             </p>
@@ -72,7 +72,7 @@ export default async function HomePage() {
         </section>
       </main>
       <footer className="mt-16 border-t border-border py-8 text-center text-sm text-muted">
-        © 2026 THE VOLT. Управление через{" "}
+        © 2026 THE ARX. Управление через{" "}
         <Link href="/admin" className="text-primary hover:underline">
           админ-панель
         </Link>

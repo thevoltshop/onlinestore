@@ -14,7 +14,7 @@ export function AdminNav({ current }: { current?: string }) {
         <Link href="/admin" className="text-lg font-bold text-primary">
           Админ-панель
         </Link>
-        <p className="text-xs text-muted">THE VOLT</p>
+        <p className="text-xs text-muted">THE ARX</p>
       </div>
       <nav className="space-y-1">
         {links.map((link) => (

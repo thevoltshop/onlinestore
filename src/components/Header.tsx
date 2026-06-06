@@ -9,13 +9,13 @@ export function Header() {
       {/* Бегущая строка */}
       <div className="overflow-hidden bg-primary py-1.5 text-white">
         <div className="animate-marquee whitespace-nowrap text-xs font-medium">
-          ⚡ Добро пожаловать в THE VOLT &nbsp;•&nbsp;
+          ⚡ Добро пожаловать в THE ARX &nbsp;•&nbsp;
           🎮 Игровая периферия &nbsp;•&nbsp;
           📱 Аксессуары для телефона &nbsp;•&nbsp;
           🚗 Товары для авто &nbsp;•&nbsp;
           🎧 Электроника и гаджеты &nbsp;•&nbsp;
           👟 Одежда и обувь &nbsp;•&nbsp;
-          ⚡ Добро пожаловать в THE VOLT &nbsp;•&nbsp;
+          ⚡ Добро пожаловать в THE ARX &nbsp;•&nbsp;
           🎮 Игровая периферия &nbsp;•&nbsp;
           📱 Аксессуары для телефона &nbsp;•&nbsp;
           🚗 Товары для авто &nbsp;•&nbsp;
@@ -30,7 +30,7 @@ export function Header() {
 
           {/* Логотип */}
           <Link href="/" className="text-xl font-bold text-primary">
-            THE VOLT
+            THE ARX
           </Link>
 
           {/* Центр — слоган (только десктоп) */}

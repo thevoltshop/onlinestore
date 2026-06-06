@@ -147,7 +147,7 @@ export default async function ProductPage({ params }: Props) {
       </main>
 
       <footer className="mt-16 border-t border-border py-8 text-center text-sm text-muted">
-        © 2026 THE VOLT.{" "}
+        © 2026 THE ARX.{" "}
         <Link href="/admin" className="text-primary hover:underline">
           Администрирование
         </Link>

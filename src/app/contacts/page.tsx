@@ -92,7 +92,7 @@ export default function ContactsPage() {
       </main>
 
       <footer className="mt-8 border-t border-border py-8 text-center text-sm text-muted">
-        © 2026 THE VOLT. Управление через{" "}
+        © 2026 THE ARX. Управление через{" "}
         <a href="/admin" className="text-primary hover:underline">
           админ-панель
         </a>

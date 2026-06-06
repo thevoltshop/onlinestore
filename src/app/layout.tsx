@@ -3,8 +3,8 @@ import "./globals.css";
 import { ThemeProvider } from "@/components/ThemeProvider";
 
 export const metadata: Metadata = {
-  title: "THE VOLT — Интернет-магазин",
-  description: "THE VOLT — электроника, гаджеты, одежда и аксессуары",
+  title: "THE ARX — Интернет-магазин",
+  description: "THE ARX — электроника, гаджеты, одежда и аксессуары",
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

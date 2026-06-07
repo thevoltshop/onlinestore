@@ -71,7 +71,7 @@ async function main() {
       where: { slug: "mk87-pastel" },
       update: {
         price: 350_000,
-        imageUrl: "https://keyartisan.net/cdn/shop/files/ajazz-mk87-tri-mode-tkl-mechanical-keyboard-2124266.jpg?v=1769700697",
+        imageUrl: "https://cdn.shopify.com/s/files/1/0355/8296/7943/files/H5a805f28cc3b48e7a860f8acd45c12ceK.jpg?v=1774919290",
       },
       create: {
         name: "Клавиатура MK87 Pastel Tri-Mode",
@@ -79,7 +79,7 @@ async function main() {
         description: "Механическая беспроводная клавиатура AJAZZ MK87 Pastel в трёх режимах: BT 5.0, 2.4G и USB-C. Пастельный дизайн с розовыми, сиреневыми и голубыми кнопками на белом корпусе. Горячая замена свитчей (Hot-swap), встроенный дисплей с индикатором заряда 100%, ручка регулировки (Knob), прокладочное крепление Gasket Mount для тихой и мягкой печати. 87 клавиш TKL-раскладки. Совместима с Windows и macOS.",
         price: 350_000,
         stock: 10,
-        imageUrl: "https://keyartisan.net/cdn/shop/files/ajazz-mk87-tri-mode-tkl-mechanical-keyboard-2124266.jpg?v=1769700697",
+        imageUrl: "https://cdn.shopify.com/s/files/1/0355/8296/7943/files/H5a805f28cc3b48e7a860f8acd45c12ceK.jpg?v=1774919290",
         categoryId: gamingCat.id,
       },
     });

@@ -73,6 +73,7 @@ async function main() {
         price: 350_000,
         name: "Механическая клавиатура Pastel 75% (83 клавиши)",
         imageUrl: "https://s.alicdn.com/@sc04/kf/Hc44f6c017a3e447e847dd2f1fad5c3a3B.jpg",
+        colors: "Белый/Чёрный,Белый/Розовый",
       },
       create: {
         name: "Механическая клавиатура Pastel 75% (83 клавиши)",
@@ -81,6 +82,7 @@ async function main() {
         price: 350_000,
         stock: 10,
         imageUrl: "https://s.alicdn.com/@sc04/kf/Hc44f6c017a3e447e847dd2f1fad5c3a3B.jpg",
+        colors: "Белый/Чёрный,Белый/Розовый",
         categoryId: gamingCat.id,
       },
     });

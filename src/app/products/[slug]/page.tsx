@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import { Header } from "@/components/Header";
 import { AddToCartButton } from "@/components/AddToCartButton";
 import { SizeSelector } from "@/components/SizeSelector";
+import { ColorSelector } from "@/components/ColorSelector";
 import { ReviewForm } from "@/components/ReviewForm";
 import { prisma } from "@/lib/db";
 import { formatPrice } from "@/lib/auth";
@@ -98,7 +99,16 @@ export default async function ProductPage({ params }: Props) {
             <p className="leading-relaxed">{product.description}</p>
 
             <div className="border-t border-border pt-4">
-              {product.sizes ? (
+              {product.colors ? (
+                <ColorSelector
+                  colors={product.colors}
+                  productId={product.id}
+                  name={product.name}
+                  price={product.price}
+                  imageUrl={product.imageUrl}
+                  stock={product.stock}
+                />
+              ) : product.sizes ? (
                 <SizeSelector
                   sizes={product.sizes}
                   productId={product.id}

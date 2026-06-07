@@ -18,7 +18,7 @@ const securityHeaders = [
       "default-src 'self'",
       "script-src 'self' 'unsafe-inline' 'unsafe-eval'",
       "style-src 'self' 'unsafe-inline'",
-      "img-src 'self' https://images.unsplash.com data: blob:",
+      "img-src 'self' https://images.unsplash.com https://keyartisan.net https://minixpc.com https://ae01.alicdn.com data: blob:",
       "connect-src 'self'",
       "font-src 'self'",
       "frame-ancestors 'none'",

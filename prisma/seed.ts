@@ -51,11 +51,9 @@ async function main() {
     await prisma.product.updateMany({ where: { slug }, data: { imageUrl } });
   }
 
-  // Скрываем удалённые товары
-  await prisma.product.updateMany({
-    where: { slug: { in: ["bluetooth-speaker", "screen-protector-9h", "oversized-hoodie"] } },
-    data: { isActive: false },
-  });
+  // Скрываем все товары кроме клавиатуры
+  await prisma.product.updateMany({ data: { isActive: false } });
+  await prisma.product.updateMany({ where: { slug: "mk87-pastel" }, data: { isActive: true } });
 
   // Добавляем новые товары если их ещё нет
   const gamingCat = await prisma.category.findUnique({ where: { slug: "gaming" } });

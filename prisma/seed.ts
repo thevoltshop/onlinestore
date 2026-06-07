@@ -67,13 +67,17 @@ async function main() {
   // Добавляем новые товары если их ещё нет
   const gamingCat = await prisma.category.findUnique({ where: { slug: "gaming" } });
   if (gamingCat) {
+    const mk87Colors = JSON.stringify([
+      { name: "Белый/Розовый", imageUrl: "https://i.postimg.cc/1n7XSRRF/Screenshot-20260608-034157-Alibabacom.jpg" },
+      { name: "Чёрный/Оранжевый", imageUrl: "https://i.postimg.cc/HcvnmWWc/Screenshot-20260608-034148-Alibabacom.jpg" },
+    ]);
     await prisma.product.upsert({
       where: { slug: "mk87-pastel" },
       update: {
         price: 350_000,
         name: "Механическая клавиатура Pastel 75% (83 клавиши)",
         imageUrl: "https://i.postimg.cc/1n7XSRRF/Screenshot-20260608-034157-Alibabacom.jpg",
-        colors: "Белый/Розовый|https://i.postimg.cc/1n7XSRRF/Screenshot-20260608-034157-Alibabacom.jpg,Чёрный/Оранжевый|https://i.postimg.cc/HcvnmWWc/Screenshot-20260608-034148-Alibabacom.jpg",
+        colors: mk87Colors,
       },
       create: {
         name: "Механическая клавиатура Pastel 75% (83 клавиши)",
@@ -82,7 +86,7 @@ async function main() {
         price: 350_000,
         stock: 10,
         imageUrl: "https://i.postimg.cc/1n7XSRRF/Screenshot-20260608-034157-Alibabacom.jpg",
-        colors: "Белый/Розовый|https://i.postimg.cc/1n7XSRRF/Screenshot-20260608-034157-Alibabacom.jpg,Чёрный/Оранжевый|https://i.postimg.cc/HcvnmWWc/Screenshot-20260608-034148-Alibabacom.jpg",
+        colors: mk87Colors,
         categoryId: gamingCat.id,
       },
     });

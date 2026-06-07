@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import Image from "next/image";
-import { formatPrice } from "@/lib/utils";
 
 const COLOR_MAP: Record<string, [string, string]> = {
   "Белый/Чёрный":  ["#ffffff", "#1f2937"],
@@ -12,11 +11,27 @@ const COLOR_MAP: Record<string, [string, string]> = {
   "Чёрный/Оранжевый": ["#1f2937", "#f97316"],
 };
 
-// Формат colors: "Название|url,Название|url"
+// Формат colors: JSON-массив [{name, imageUrl}] или устаревший "Название|url,Название|url"
 function parseVariants(colors: string) {
+  try {
+    const arr = JSON.parse(colors);
+    if (Array.isArray(arr)) {
+      return arr.map((v: { name: string; imageUrl?: string }) => ({
+        name: v.name ?? "",
+        imageUrl: v.imageUrl ?? null,
+      }));
+    }
+  } catch {
+    // fall through to legacy format
+  }
   return colors.split(",").map((part) => {
-    const [name, imageUrl = ""] = part.trim().split("|");
-    return { name: name.trim(), imageUrl: imageUrl.trim() || null };
+    const trimmed = part.trim();
+    const idx = trimmed.indexOf("|");
+    if (idx === -1) return { name: trimmed, imageUrl: null };
+    return {
+      name: trimmed.slice(0, idx).trim(),
+      imageUrl: trimmed.slice(idx + 1).trim() || null,
+    };
   });
 }
 

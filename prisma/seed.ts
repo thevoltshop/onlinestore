@@ -51,6 +51,12 @@ async function main() {
     await prisma.product.updateMany({ where: { slug }, data: { imageUrl } });
   }
 
+  // Скрываем удалённые товары
+  await prisma.product.updateMany({
+    where: { slug: { in: ["bluetooth-speaker", "screen-protector-9h", "oversized-hoodie"] } },
+    data: { isActive: false },
+  });
+
   // Добавляем новые товары если их ещё нет
   const gamingCat = await prisma.category.findUnique({ where: { slug: "gaming" } });
   if (gamingCat) {

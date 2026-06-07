@@ -24,7 +24,7 @@ export default async function AdminProductsPage() {
       </div>
 
       <div className="mt-6 overflow-x-auto">
-        <table className="card w-full text-left text-sm">
+        <table className="card w-full min-w-[640px] text-left text-sm">
           <thead className="border-b border-border bg-gray-50">
             <tr>
               <th className="p-4">Товар</th>

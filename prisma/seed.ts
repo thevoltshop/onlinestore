@@ -44,8 +44,8 @@ async function main() {
     "sport-sneakers":          "https://images.unsplash.com/photo-1628529791722-b25aee45973f?w=600&h=750&fit=crop&q=90",
     "oversized-hoodie":        "https://images.unsplash.com/photo-1506451854428-e72f199b79db?w=600&h=750&fit=crop&q=90",
     "slim-fit-jeans":          "https://images.unsplash.com/photo-1542272604-787c3835535d?w=600&h=750&fit=crop&q=90",
-    // Клавиатура Pastel — чистое Unsplash-фото по умолчанию (варианты цвета меняют его)
-    "mk87-pastel":             "https://images.unsplash.com/photo-1541140532154-b024d705b90a?w=600&h=750&fit=crop&q=90",
+    // Клавиатура Pastel — групповое фото всех вариантов
+    "mk87-pastel":             "https://i.postimg.cc/4yvNQ5zx/Screenshot-20260608-041812-Alibabacom.jpg",
   };
   for (const [slug, imageUrl] of Object.entries(imageMap)) {
     await prisma.product.updateMany({ where: { slug }, data: { imageUrl } });
@@ -61,7 +61,7 @@ async function main() {
       update: {
         price: 350_000,
         name: "Механическая клавиатура Pastel 75% (83 клавиши)",
-        imageUrl: "https://images.unsplash.com/photo-1541140532154-b024d705b90a?w=600&h=750&fit=crop&q=90",
+        imageUrl: "https://i.postimg.cc/4yvNQ5zx/Screenshot-20260608-041812-Alibabacom.jpg",
         colors: mk87Colors,
       },
       create: {
@@ -70,7 +70,7 @@ async function main() {
         description: "Механическая игровая клавиатура 75% формфактора, 83 клавиши, подключение Type-C. Пастельный дизайн — доступна в цветах: синий/розовый и чёрный/оранжевый. Светодиодная RGB-подсветка, эргономичный корпус, совместима с Windows и macOS.",
         price: 350_000,
         stock: 10,
-        imageUrl: "https://images.unsplash.com/photo-1541140532154-b024d705b90a?w=600&h=750&fit=crop&q=90",
+        imageUrl: "https://i.postimg.cc/4yvNQ5zx/Screenshot-20260608-041812-Alibabacom.jpg",
         colors: mk87Colors,
         categoryId: gamingCat.id,
       },

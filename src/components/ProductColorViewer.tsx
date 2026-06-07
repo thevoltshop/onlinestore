@@ -4,39 +4,17 @@ import { useState } from "react";
 import Image from "next/image";
 
 const COLOR_MAP: Record<string, [string, string]> = {
-  "Белый/Чёрный":  ["#ffffff", "#1f2937"],
-  "Белый/Розовый": ["#ffffff", "#f472b6"],
-  "Белый/Синий":   ["#ffffff", "#60a5fa"],
-  "Белый/Жёлтый":  ["#ffffff", "#facc15"],
+  "Белый/Чёрный":     ["#ffffff", "#1f2937"],
+  "Белый/Розовый":    ["#ffffff", "#f472b6"],
+  "Белый/Синий":      ["#ffffff", "#60a5fa"],
+  "Белый/Жёлтый":     ["#ffffff", "#facc15"],
   "Чёрный/Оранжевый": ["#1f2937", "#f97316"],
 };
 
-// Формат colors: JSON-массив [{name, imageUrl}] или устаревший "Название|url,Название|url"
-function parseVariants(colors: string) {
-  try {
-    const arr = JSON.parse(colors);
-    if (Array.isArray(arr)) {
-      return arr.map((v: { name: string; imageUrl?: string }) => ({
-        name: v.name ?? "",
-        imageUrl: v.imageUrl ?? null,
-      }));
-    }
-  } catch {
-    // fall through to legacy format
-  }
-  return colors.split(",").map((part) => {
-    const trimmed = part.trim();
-    const idx = trimmed.indexOf("|");
-    if (idx === -1) return { name: trimmed, imageUrl: null };
-    return {
-      name: trimmed.slice(0, idx).trim(),
-      imageUrl: trimmed.slice(idx + 1).trim() || null,
-    };
-  });
-}
+export type ColorVariant = { name: string; imageUrl: string | null };
 
 type Props = {
-  colors: string;
+  variants: ColorVariant[];
   defaultImage: string | null;
   productId: string;
   name: string;
@@ -44,10 +22,7 @@ type Props = {
   stock: number;
 };
 
-export function ProductColorViewer({
-  colors, defaultImage, productId, name, price, stock,
-}: Props) {
-  const variants = parseVariants(colors);
+export function ProductColorViewer({ variants, defaultImage, productId, name, price, stock }: Props) {
   const [selected, setSelected] = useState<string | null>(null);
   const [currentImage, setCurrentImage] = useState<string | null>(defaultImage);
 

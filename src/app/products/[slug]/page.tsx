@@ -4,11 +4,31 @@ import { notFound } from "next/navigation";
 import { Header } from "@/components/Header";
 import { AddToCartButton } from "@/components/AddToCartButton";
 import { SizeSelector } from "@/components/SizeSelector";
-import { ProductColorViewer } from "@/components/ProductColorViewer";
+import { ProductColorViewer, type ColorVariant } from "@/components/ProductColorViewer";
 import { ReviewForm } from "@/components/ReviewForm";
 import { prisma } from "@/lib/db";
 import { formatPrice } from "@/lib/auth";
 import { ProductCard } from "@/components/ProductCard";
+
+// Парсим строку цветов на сервере — формат: "Название;;;https://URL;;;Название2;;;https://URL2"
+// или устаревший "Название|URL,Название2|URL2"
+function parseColorVariants(colors: string): ColorVariant[] {
+  // Новый формат: разделитель между вариантами — ":::"
+  if (colors.includes(":::")) {
+    return colors.split(":::").map((part) => {
+      const idx = part.indexOf("|||");
+      if (idx === -1) return { name: part.trim(), imageUrl: null };
+      return { name: part.slice(0, idx).trim(), imageUrl: part.slice(idx + 3).trim() || null };
+    });
+  }
+  // Старый формат: "Название|URL,Название2|URL2" — разделитель запятая, поле — первый |
+  return colors.split(",").map((part) => {
+    const trimmed = part.trim();
+    const idx = trimmed.indexOf("|");
+    if (idx === -1) return { name: trimmed, imageUrl: null };
+    return { name: trimmed.slice(0, idx).trim(), imageUrl: trimmed.slice(idx + 1).trim() || null };
+  });
+}
 
 type Props = { params: Promise<{ slug: string }> };
 
@@ -60,7 +80,7 @@ export default async function ProductPage({ params }: Props) {
           /* Товар с вариантами цвета — изображение меняется при выборе */
           <div className="mt-6 grid gap-8 md:grid-cols-2">
             <ProductColorViewer
-              colors={product.colors}
+              variants={parseColorVariants(product.colors)}
               defaultImage={product.imageUrl}
               productId={product.id}
               name={product.name}

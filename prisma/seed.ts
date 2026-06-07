@@ -67,10 +67,8 @@ async function main() {
   // Добавляем новые товары если их ещё нет
   const gamingCat = await prisma.category.findUnique({ where: { slug: "gaming" } });
   if (gamingCat) {
-    const mk87Colors = JSON.stringify([
-      { name: "Белый/Розовый", imageUrl: "https://i.postimg.cc/1n7XSRRF/Screenshot-20260608-034157-Alibabacom.jpg" },
-      { name: "Чёрный/Оранжевый", imageUrl: "https://i.postimg.cc/HcvnmWWc/Screenshot-20260608-034148-Alibabacom.jpg" },
-    ]);
+    // Формат: "Название|||URL:::Название2|||URL2"  (||| между полями, ::: между вариантами)
+    const mk87Colors = "Белый/Розовый|||https://i.postimg.cc/1n7XSRRF/Screenshot-20260608-034157-Alibabacom.jpg:::Чёрный/Оранжевый|||https://i.postimg.cc/HcvnmWWc/Screenshot-20260608-034148-Alibabacom.jpg";
     await prisma.product.upsert({
       where: { slug: "mk87-pastel" },
       update: {

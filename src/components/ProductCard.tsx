@@ -24,11 +24,11 @@ export function ProductCard({
   price,
   imageUrl,
   categoryName,
-  avgRating,
-  reviewCount,
   description = "",
   stock = 0,
 }: ProductCardProps) {
+  const inStock = stock > 0;
+
   return (
     <Link
       href={`/products/${slug}`}
@@ -50,25 +50,28 @@ export function ProductCard({
           </div>
         )}
 
-        {/* Тёмный градиент снизу при наведении */}
+        {/* Градиент снизу при наведении */}
         <div className="absolute inset-0 bg-gradient-to-t from-black/65 via-black/10 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
 
         {/* Цена поверх фото при наведении */}
         <div className="absolute bottom-0 left-0 right-0 translate-y-3 px-4 pb-4 opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100">
-          <p className="text-lg font-bold text-white drop-shadow">
-            {formatPrice(price)}
-          </p>
-          {avgRating != null && (
-            <div className="flex items-center gap-1 mt-0.5">
-              <span className="text-yellow-300 text-xs">
-                {"★".repeat(Math.round(avgRating))}{"☆".repeat(5 - Math.round(avgRating))}
-              </span>
-              <span className="text-white/70 text-xs">({reviewCount})</span>
-            </div>
-          )}
+          <p className="text-lg font-bold text-white drop-shadow">{formatPrice(price)}</p>
         </div>
 
-        {/* Кнопка избранного */}
+        {/* Бейдж наличия — левый верхний угол */}
+        <div className="absolute left-2.5 top-2.5">
+          <span
+            className={`inline-block rounded-full px-2.5 py-1 text-[11px] font-bold shadow ${
+              inStock
+                ? "bg-blue-500 text-white"
+                : "bg-gray-400 text-white"
+            }`}
+          >
+            {inStock ? "В наличии" : "Нет в наличии"}
+          </span>
+        </div>
+
+        {/* Избранное — правый верхний угол */}
         <FavoriteButton productId={id} />
 
         {/* Быстрый просмотр */}
@@ -81,16 +84,14 @@ export function ProductCard({
       {/* Инфо под фото */}
       <div className="px-3 py-3">
         {categoryName && (
-          <span className="inline-block rounded-full bg-primary/10 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-primary">
+          <p className="text-[10px] font-semibold uppercase tracking-widest text-muted">
             {categoryName}
-          </span>
+          </p>
         )}
-        <h3 className="mt-1.5 line-clamp-2 text-sm font-semibold leading-snug transition-colors group-hover:text-primary">
+        <h3 className="mt-1 line-clamp-2 text-sm font-bold leading-snug transition-colors group-hover:text-primary">
           {name}
         </h3>
-        <p className="mt-2 text-base font-bold text-primary">
-          {formatPrice(price)}
-        </p>
+        <p className="mt-2 text-base font-bold text-primary">{formatPrice(price)}</p>
       </div>
     </Link>
   );

@@ -72,17 +72,17 @@ async function main() {
       update: {
         price: 350_000,
         name: "Механическая клавиатура Pastel 75% (83 клавиши)",
-        imageUrl: "https://s.alicdn.com/@sc04/kf/Hc44f6c017a3e447e847dd2f1fad5c3a3B.jpg",
-        colors: "Белый/Чёрный,Белый/Розовый",
+        imageUrl: "https://i.postimg.cc/1n7XSRRF/Screenshot-20260608-034157-Alibabacom.jpg",
+        colors: "Белый/Розовый|https://i.postimg.cc/1n7XSRRF/Screenshot-20260608-034157-Alibabacom.jpg,Чёрный/Оранжевый|https://i.postimg.cc/HcvnmWWc/Screenshot-20260608-034148-Alibabacom.jpg",
       },
       create: {
         name: "Механическая клавиатура Pastel 75% (83 клавиши)",
         slug: "mk87-pastel",
-        description: "Механическая игровая клавиатура 75% формфактора, 83 клавиши, подключение Type-C. Пастельный дизайн — доступна в цветах: синий/розовый, чёрный/красный, серый/жёлтый. Светодиодная RGB-подсветка, эргономичный корпус, совместима с Windows и macOS.",
+        description: "Механическая игровая клавиатура 75% формфактора, 83 клавиши, подключение Type-C. Пастельный дизайн — доступна в цветах: синий/розовый и чёрный/оранжевый. Светодиодная RGB-подсветка, эргономичный корпус, совместима с Windows и macOS.",
         price: 350_000,
         stock: 10,
-        imageUrl: "https://s.alicdn.com/@sc04/kf/Hc44f6c017a3e447e847dd2f1fad5c3a3B.jpg",
-        colors: "Белый/Чёрный,Белый/Розовый",
+        imageUrl: "https://i.postimg.cc/1n7XSRRF/Screenshot-20260608-034157-Alibabacom.jpg",
+        colors: "Белый/Розовый|https://i.postimg.cc/1n7XSRRF/Screenshot-20260608-034157-Alibabacom.jpg,Чёрный/Оранжевый|https://i.postimg.cc/HcvnmWWc/Screenshot-20260608-034148-Alibabacom.jpg",
         categoryId: gamingCat.id,
       },
     });

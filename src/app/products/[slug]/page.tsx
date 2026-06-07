@@ -4,7 +4,7 @@ import { notFound } from "next/navigation";
 import { Header } from "@/components/Header";
 import { AddToCartButton } from "@/components/AddToCartButton";
 import { SizeSelector } from "@/components/SizeSelector";
-import { ColorSelector } from "@/components/ColorSelector";
+import { ProductColorViewer } from "@/components/ProductColorViewer";
 import { ReviewForm } from "@/components/ReviewForm";
 import { prisma } from "@/lib/db";
 import { formatPrice } from "@/lib/auth";
@@ -56,6 +56,38 @@ export default async function ProductPage({ params }: Props) {
           ← Назад в каталог
         </Link>
 
+        {product.colors ? (
+          /* Товар с вариантами цвета — изображение меняется при выборе */
+          <div className="mt-6 grid gap-8 md:grid-cols-2">
+            <ProductColorViewer
+              colors={product.colors}
+              defaultImage={product.imageUrl}
+              productId={product.id}
+              name={product.name}
+              price={product.price}
+              stock={product.stock}
+            />
+            <div className="space-y-4">
+              {product.category && (
+                <span className="text-sm font-medium uppercase tracking-wide text-muted">
+                  {product.category.name}
+                </span>
+              )}
+              <h1 className="text-3xl font-bold">{product.name}</h1>
+              {avgRating !== null && (
+                <div className="flex items-center gap-2">
+                  <Stars rating={avgRating} />
+                  <span className="text-sm text-muted">{avgRating.toFixed(1)} ({product.reviews.length} отз.)</span>
+                </div>
+              )}
+              <p className="text-3xl font-bold text-primary">{formatPrice(product.price)}</p>
+              <p className="text-sm text-muted">
+                {product.stock > 0 ? `В наличии: ${product.stock} шт.` : "Нет в наличии"}
+              </p>
+              <p className="leading-relaxed">{product.description}</p>
+            </div>
+          </div>
+        ) : (
         <div className="mt-6 grid gap-8 md:grid-cols-2">
           {/* Фото */}
           <div className="card relative aspect-square overflow-hidden">
@@ -82,7 +114,6 @@ export default async function ProductPage({ params }: Props) {
             )}
             <h1 className="text-3xl font-bold">{product.name}</h1>
 
-            {/* Рейтинг */}
             {avgRating !== null && (
               <div className="flex items-center gap-2">
                 <Stars rating={avgRating} />
@@ -99,16 +130,7 @@ export default async function ProductPage({ params }: Props) {
             <p className="leading-relaxed">{product.description}</p>
 
             <div className="border-t border-border pt-4">
-              {product.colors ? (
-                <ColorSelector
-                  colors={product.colors}
-                  productId={product.id}
-                  name={product.name}
-                  price={product.price}
-                  imageUrl={product.imageUrl}
-                  stock={product.stock}
-                />
-              ) : product.sizes ? (
+              {product.sizes ? (
                 <SizeSelector
                   sizes={product.sizes}
                   productId={product.id}
@@ -129,6 +151,7 @@ export default async function ProductPage({ params }: Props) {
             </div>
           </div>
         </div>
+        )}
 
         {/* Похожие товары */}
         {similar.length > 0 && (

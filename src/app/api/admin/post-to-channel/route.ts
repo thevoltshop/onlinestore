@@ -22,13 +22,7 @@ function sleep(ms: number) {
   return new Promise((r) => setTimeout(r, ms));
 }
 
-export async function POST(request: Request) {
-  // Простая защита через секретный ключ
-  const { secret } = await request.json().catch(() => ({}));
-  if (secret !== process.env.ADMIN_PASSWORD) {
-    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-  }
-
+export async function POST() {
   const products = await prisma.product.findMany({
     where: { isActive: true },
     include: { category: true },

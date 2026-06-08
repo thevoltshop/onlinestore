@@ -140,6 +140,18 @@ export default function CheckoutPage() {
               После получения чека мы подтвердим заказ и свяжемся с вами.
             </p>
 
+            <div className="rounded-xl bg-blue-50 p-4 text-sm text-center">
+              <p className="text-blue-700">Есть вопросы? Напишите в поддержку:</p>
+              <a
+                href="https://t.me/thearx_manager"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="mt-1 inline-block font-bold text-blue-600 hover:underline"
+              >
+                @thearx_manager
+              </a>
+            </div>
+
             <button
               onClick={() => router.push("/")}
               className="btn w-full border border-border hover:border-primary"

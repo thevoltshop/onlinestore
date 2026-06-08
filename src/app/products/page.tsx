@@ -8,7 +8,11 @@ type Props = { searchParams: Promise<{ category?: string; q?: string; sort?: str
 export default async function ProductsPage({ searchParams }: Props) {
   const { category, q, sort } = await searchParams;
 
-  const categories = await prisma.category.findMany({ orderBy: { name: "asc" } });
+  // Только категории с активными товарами
+  const categories = await prisma.category.findMany({
+    where: { products: { some: { isActive: true } } },
+    orderBy: { name: "asc" },
+  });
 
   const products = await prisma.product.findMany({
     where: {

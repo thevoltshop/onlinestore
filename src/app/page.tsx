@@ -3,6 +3,8 @@ import { Header } from "@/components/Header";
 import { ProductCard } from "@/components/ProductCard";
 import { prisma } from "@/lib/db";
 
+export const dynamic = "force-dynamic";
+
 export default async function HomePage() {
   const products = await prisma.product.findMany({
     where: { isActive: true },
@@ -10,7 +12,11 @@ export default async function HomePage() {
     orderBy: { createdAt: "desc" },
   });
 
-  const categories = await prisma.category.findMany({ orderBy: { name: "asc" } });
+  // Только категории у которых есть активные товары
+  const categories = await prisma.category.findMany({
+    where: { products: { some: { isActive: true } } },
+    orderBy: { name: "asc" },
+  });
 
   return (
     <div>

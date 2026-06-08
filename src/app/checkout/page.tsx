@@ -131,8 +131,8 @@ export default function CheckoutPage() {
               <ol className="list-decimal list-inside space-y-1 text-blue-700">
                 <li>Переведите сумму на карту выше</li>
                 <li>Сделайте скриншот чека</li>
-                <li>Отправьте чек в Telegram: <span className="font-bold">{BOT_USERNAME}</span></li>
-                <li>Укажите номер заказа: <span className="font-bold">{order.orderNumber}</span></li>
+                <li>Откройте Telegram: <span className="font-bold">{BOT_USERNAME}</span></li>
+                <li>Отправьте фото чека с подписью: <span className="font-bold select-all">{order.orderNumber}</span></li>
               </ol>
             </div>
 

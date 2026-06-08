@@ -64,15 +64,28 @@ export async function POST(request: Request) {
         ? `@${msg.from.username}`
         : msg.from?.first_name || "Клиент";
 
-      // Если клиент написал номер заказа — сохраняем его chat ID
+      // Сохраняем chat ID клиента к заказу
       const text: string = msg.text || msg.caption || "";
       const orderMatch = text.match(/ORD-[A-Z0-9]+/i);
       if (orderMatch) {
-        const orderNumber = orderMatch[0].toUpperCase();
+        // Нашли номер заказа в сообщении — сохраняем точно
         await prisma.order.updateMany({
-          where: { orderNumber },
+          where: { orderNumber: orderMatch[0].toUpperCase() },
           data: { telegramChatId: clientChatId },
         });
+      } else {
+        // Нет номера заказа — сохраняем к последнему заказу без chat ID (последние 2 часа)
+        const twoHoursAgo = new Date(Date.now() - 2 * 60 * 60 * 1000);
+        const recent = await prisma.order.findFirst({
+          where: { telegramChatId: null, createdAt: { gte: twoHoursAgo } },
+          orderBy: { createdAt: "desc" },
+        });
+        if (recent) {
+          await prisma.order.update({
+            where: { id: recent.id },
+            data: { telegramChatId: clientChatId },
+          });
+        }
       }
 
       if (msg.photo) {

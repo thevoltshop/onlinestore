@@ -51,9 +51,21 @@ async function main() {
     await prisma.product.updateMany({ where: { slug }, data: { imageUrl } });
   }
 
-  // Скрываем все товары кроме клавиатуры
-  await prisma.product.updateMany({ data: { isActive: false } });
-  await prisma.product.updateMany({ where: { slug: "mk87-pastel" }, data: { isActive: true } });
+  // Скрываем только старые сидовые товары — пользовательские не трогаем
+  await prisma.product.updateMany({
+    where: {
+      slug: {
+        in: [
+          "dashcam-4k", "car-vacuum", "car-freshener",
+          "gaming-headset", "gaming-mouse", "gaming-keyboard",
+          "wireless-headphones-anc", "smartwatch-pro", "bluetooth-speaker",
+          "wireless-charger-15w", "screen-protector-9h", "silicone-case-magsafe",
+          "sport-sneakers", "oversized-hoodie", "slim-fit-jeans",
+        ],
+      },
+    },
+    data: { isActive: false },
+  });
 
   // Добавляем новые товары если их ещё нет
   const gamingCat = await prisma.category.findUnique({ where: { slug: "gaming" } });

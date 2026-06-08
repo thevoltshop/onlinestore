@@ -51,20 +51,24 @@ async function main() {
     await prisma.product.updateMany({ where: { slug }, data: { imageUrl } });
   }
 
-  // Скрываем только старые сидовые товары — пользовательские не трогаем
+  const SEED_SLUGS = [
+    "dashcam-4k", "car-vacuum", "car-freshener",
+    "gaming-headset", "gaming-mouse", "gaming-keyboard",
+    "wireless-headphones-anc", "smartwatch-pro", "bluetooth-speaker",
+    "wireless-charger-15w", "screen-protector-9h", "silicone-case-magsafe",
+    "sport-sneakers", "oversized-hoodie", "slim-fit-jeans",
+  ];
+
+  // Скрываем только старые сидовые товары
   await prisma.product.updateMany({
-    where: {
-      slug: {
-        in: [
-          "dashcam-4k", "car-vacuum", "car-freshener",
-          "gaming-headset", "gaming-mouse", "gaming-keyboard",
-          "wireless-headphones-anc", "smartwatch-pro", "bluetooth-speaker",
-          "wireless-charger-15w", "screen-protector-9h", "silicone-case-magsafe",
-          "sport-sneakers", "oversized-hoodie", "slim-fit-jeans",
-        ],
-      },
-    },
+    where: { slug: { in: SEED_SLUGS } },
     data: { isActive: false },
+  });
+
+  // Восстанавливаем все пользовательские товары (не из старого seed)
+  await prisma.product.updateMany({
+    where: { slug: { notIn: SEED_SLUGS } },
+    data: { isActive: true },
   });
 
   // Добавляем новые товары если их ещё нет

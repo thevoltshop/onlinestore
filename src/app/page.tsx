@@ -68,6 +68,7 @@ export default async function HomePage() {
                 price={product.price}
                 imageUrl={product.imageUrl}
                 categoryName={product.category?.name}
+                stock={product.stock}
               />
             ))}
           </div>

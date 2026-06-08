@@ -17,7 +17,7 @@ async function main() {
     },
   });
 
-  // Навсегда скрываем старые сидовые товары
+  // Удаляем старые сидовые товары навсегда
   const OLD_SLUGS = [
     "dashcam-4k", "car-vacuum", "car-freshener",
     "gaming-headset", "gaming-mouse", "gaming-keyboard",
@@ -25,16 +25,16 @@ async function main() {
     "wireless-charger-15w", "screen-protector-9h", "silicone-case-magsafe",
     "sport-sneakers", "oversized-hoodie", "slim-fit-jeans",
   ];
-  await prisma.product.updateMany({
+  const oldProducts = await prisma.product.findMany({
     where: { slug: { in: OLD_SLUGS } },
-    data: { isActive: false },
+    select: { id: true },
   });
-
-  // Все остальные товары (добавленные через админку) — активны
-  await prisma.product.updateMany({
-    where: { slug: { notIn: OLD_SLUGS } },
-    data: { isActive: true },
-  });
+  const oldIds = oldProducts.map((p) => p.id);
+  if (oldIds.length > 0) {
+    await prisma.review.deleteMany({ where: { productId: { in: oldIds } } });
+    await prisma.orderItem.deleteMany({ where: { productId: { in: oldIds } } });
+    await prisma.product.deleteMany({ where: { id: { in: oldIds } } });
+  }
 
   // Клавиатура Pastel 75%
   const gamingCat = await prisma.category.findUnique({ where: { slug: "gaming" } });

@@ -7,7 +7,6 @@ export default async function HomePage() {
   const products = await prisma.product.findMany({
     where: { isActive: true },
     include: { category: true },
-    take: 8,
     orderBy: { createdAt: "desc" },
   });
 

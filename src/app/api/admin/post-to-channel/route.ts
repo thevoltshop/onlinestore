@@ -42,6 +42,9 @@ export async function POST() {
       product.stock > 0 ? `✅ В наличии` : `❌ Нет в наличии`,
       ``,
       `🔗 [Смотреть на сайте](${SITE}/products/${product.slug})`,
+      ``,
+      `💬 [Написать менеджеру](https://t.me/thearx_manager)`,
+      `📸 [Instagram](https://www.instagram.com/thearx.uz)`,
     ]
       .filter((l) => l !== null)
       .join("\n");

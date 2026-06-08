@@ -3,6 +3,7 @@ import { prisma } from "@/lib/db";
 import { getSession } from "@/lib/auth";
 
 async function sendTelegramNotification(order: {
+  id: string;
   orderNumber: string;
   customerName: string;
   customerPhone?: string | null;
@@ -17,7 +18,7 @@ async function sendTelegramNotification(order: {
   if (!token || !chatId) return;
 
   const itemLines = order.items
-    .map((i) => `• ${i.product.name} × ${i.quantity} — ${i.price * i.quantity} сум`)
+    .map((i) => `• ${i.product.name} × ${i.quantity} — ${(i.price * i.quantity).toLocaleString("ru-RU")} сум`)
     .join("\n");
 
   const text = [
@@ -33,6 +34,8 @@ async function sendTelegramNotification(order: {
     itemLines,
     ``,
     `💰 Итого: ${order.total.toLocaleString("ru-RU")} сум`,
+    ``,
+    `⏳ Ожидает подтверждения оплаты`,
   ]
     .filter((line) => line !== null)
     .join("\n");
@@ -41,7 +44,16 @@ async function sendTelegramNotification(order: {
     await fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ chat_id: chatId, text }),
+      body: JSON.stringify({
+        chat_id: chatId,
+        text,
+        reply_markup: {
+          inline_keyboard: [[
+            { text: "✅ Подтвердить", callback_data: `approve:${order.id}` },
+            { text: "❌ Отклонить",   callback_data: `reject:${order.id}`  },
+          ]],
+        },
+      }),
     });
   } catch {
     // Не блокируем заказ если Telegram недоступен

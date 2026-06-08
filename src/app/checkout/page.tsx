@@ -6,15 +6,13 @@ import { useRouter } from "next/navigation";
 import { Header } from "@/components/Header";
 import type { Cart } from "@/lib/types";
 
+const CARD_NUMBER = "9860190115631094";
+const CARD_DISPLAY = "9860 1901 1563 1094";
+const CARD_HOLDER = "Динара Ахмедова";
+const BOT_USERNAME = "@TheVolt_bot";
+
 function formatPrice(price: number) {
   return new Intl.NumberFormat("ru-RU", { maximumFractionDigits: 0 }).format(price) + " сум";
-}
-
-function buildPaymeUrl(orderId: string, totalSum: number): string {
-  const merchantId = process.env.NEXT_PUBLIC_PAYME_MERCHANT_ID ?? "";
-  const tiyin = Math.round(totalSum * 100);
-  const raw = `m=${merchantId};ac.order_id=${orderId};a=${tiyin}`;
-  return `https://checkout.paycom.uz/${btoa(raw)}`;
 }
 
 export default function CheckoutPage() {
@@ -23,6 +21,7 @@ export default function CheckoutPage() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [order, setOrder] = useState<{ id: string; orderNumber: string; total: number } | null>(null);
+  const [copied, setCopied] = useState(false);
 
   const [form, setForm] = useState({
     customerName: "",
@@ -80,36 +79,73 @@ export default function CheckoutPage() {
     );
   }
 
-  // Заказ оформлен — выбор способа оплаты
+  function copyCard() {
+    navigator.clipboard.writeText(CARD_NUMBER).then(() => {
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    });
+  }
+
+  // Заказ оформлен — показываем реквизиты для оплаты
   if (order) {
-    const paymeUrl = buildPaymeUrl(order.id, order.total);
     return (
       <div>
         <Header />
         <main className="mx-auto max-w-lg px-4 py-16">
-          <div className="card space-y-5 p-8 text-center">
-            <div className="text-5xl">✓</div>
-            <h2 className="text-xl font-bold">Заказ {order.orderNumber} оформлен!</h2>
-            <p className="text-muted">Сумма: {formatPrice(order.total)}</p>
-            <p className="text-sm text-muted">Выберите способ оплаты</p>
-
-            <div className="space-y-3 pt-2">
-              <a
-                href={paymeUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="btn btn-primary flex w-full items-center justify-center gap-2"
-              >
-                <span>Оплатить через Payme</span>
-              </a>
-
-              <button
-                onClick={() => router.push("/")}
-                className="btn w-full border border-border hover:border-primary"
-              >
-                Оплачу при получении
-              </button>
+          <div className="card space-y-6 p-8">
+            <div className="text-center">
+              <div className="mb-2 text-5xl">✅</div>
+              <h2 className="text-xl font-bold">Заказ {order.orderNumber} оформлен!</h2>
+              <p className="mt-1 text-muted">Сумма к оплате: <span className="font-bold text-primary">{formatPrice(order.total)}</span></p>
             </div>
+
+            <div className="rounded-xl border border-border bg-card p-5 space-y-4">
+              <p className="text-sm font-semibold text-muted uppercase tracking-wide">Реквизиты для оплаты</p>
+
+              <div className="space-y-1">
+                <p className="text-xs text-muted">Банк</p>
+                <p className="font-medium">UzCard</p>
+              </div>
+
+              <div className="space-y-1">
+                <p className="text-xs text-muted">Номер карты</p>
+                <div className="flex items-center gap-3">
+                  <span className="font-mono text-lg font-bold tracking-widest">{CARD_DISPLAY}</span>
+                  <button
+                    onClick={copyCard}
+                    className="rounded-lg border border-border px-3 py-1 text-xs font-medium transition hover:border-primary hover:text-primary"
+                  >
+                    {copied ? "Скопировано!" : "Копировать"}
+                  </button>
+                </div>
+              </div>
+
+              <div className="space-y-1">
+                <p className="text-xs text-muted">Получатель</p>
+                <p className="font-medium">{CARD_HOLDER}</p>
+              </div>
+            </div>
+
+            <div className="rounded-xl bg-blue-50 p-4 text-sm space-y-2">
+              <p className="font-semibold text-blue-800">Как подтвердить оплату:</p>
+              <ol className="list-decimal list-inside space-y-1 text-blue-700">
+                <li>Переведите сумму на карту выше</li>
+                <li>Сделайте скриншот чека</li>
+                <li>Отправьте чек в Telegram: <span className="font-bold">{BOT_USERNAME}</span></li>
+                <li>Укажите номер заказа: <span className="font-bold">{order.orderNumber}</span></li>
+              </ol>
+            </div>
+
+            <p className="text-center text-xs text-muted">
+              После получения чека мы подтвердим заказ и свяжемся с вами.
+            </p>
+
+            <button
+              onClick={() => router.push("/")}
+              className="btn w-full border border-border hover:border-primary"
+            >
+              На главную
+            </button>
           </div>
         </main>
       </div>

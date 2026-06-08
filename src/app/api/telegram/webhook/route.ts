@@ -26,13 +26,29 @@ export async function POST(request: Request) {
       const status = action === "approve" ? "confirmed" : "cancelled";
       const label  = action === "approve" ? "✅ Подтверждён" : "❌ Отклонён";
 
-      await prisma.order.update({ where: { id: orderId }, data: { status } });
+      const order = await prisma.order.update({
+        where: { id: orderId },
+        data: { status },
+      });
 
+      // Редактируем сообщение у админа
       await tg("editMessageText", {
         chat_id: message.chat.id,
         message_id: message.message_id,
         text: message.text + `\n\n${label} (${from.first_name})`,
       });
+
+      // Уведомляем клиента если он писал в бот
+      if (order.telegramChatId) {
+        const clientText = action === "approve"
+          ? `✅ Ваш заказ ${order.orderNumber} подтверждён!\n\nОплата получена, мы готовим заказ к отправке. Спасибо!`
+          : `❌ Ваш заказ ${order.orderNumber} отклонён.\n\nЕсли вы уже оплатили, пожалуйста свяжитесь с нами.`;
+
+        await tg("sendMessage", {
+          chat_id: order.telegramChatId,
+          text: clientText,
+        });
+      }
 
       return NextResponse.json({ ok: true });
     }
@@ -42,15 +58,24 @@ export async function POST(request: Request) {
       const msg = update.message;
       const clientChatId = msg.chat.id.toString();
 
-      // Сообщения от самого себя (админа) игнорируем
       if (clientChatId === ADMIN_CHAT_ID) return NextResponse.json({ ok: true });
 
       const username = msg.from?.username
         ? `@${msg.from.username}`
         : msg.from?.first_name || "Клиент";
 
+      // Если клиент написал номер заказа — сохраняем его chat ID
+      const text: string = msg.text || msg.caption || "";
+      const orderMatch = text.match(/ORD-[A-Z0-9]+/i);
+      if (orderMatch) {
+        const orderNumber = orderMatch[0].toUpperCase();
+        await prisma.order.updateMany({
+          where: { orderNumber },
+          data: { telegramChatId: clientChatId },
+        });
+      }
+
       if (msg.photo) {
-        // Клиент прислал фото чека
         const photoId = msg.photo[msg.photo.length - 1].file_id;
         const caption = msg.caption ? `\n${msg.caption}` : "";
         await tg("sendPhoto", {
@@ -63,7 +88,6 @@ export async function POST(request: Request) {
           text: "✅ Чек получен! Мы проверим оплату и подтвердим ваш заказ в ближайшее время.",
         });
       } else if (msg.text) {
-        // Клиент написал текст
         await tg("sendMessage", {
           chat_id: ADMIN_CHAT_ID,
           text: `📩 Сообщение от ${username}:\n${msg.text}`,

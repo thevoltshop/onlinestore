@@ -64,11 +64,12 @@ model Order {
   customerPhone String?
   address       String
   total         Float
-  notes         String?
-  items         OrderItem[]
-  transactions  PaymeTransaction[]
-  createdAt     DateTime           @default(now())
-  updatedAt     DateTime           @updatedAt
+  notes            String?
+  telegramChatId   String?
+  items            OrderItem[]
+  transactions     PaymeTransaction[]
+  createdAt        DateTime           @default(now())
+  updatedAt        DateTime           @updatedAt
 }
 
 model PaymeTransaction {

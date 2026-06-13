@@ -7,14 +7,11 @@ async function main() {
   // Создаём/обновляем админа
   const email = process.env.ADMIN_EMAIL || "admin@store.local";
   const password = process.env.ADMIN_PASSWORD || "admin123";
+  const passwordHash = await bcrypt.hash(password, 10);
   await prisma.admin.upsert({
     where: { email },
-    update: {},
-    create: {
-      email,
-      name: "Администратор",
-      passwordHash: await bcrypt.hash(password, 10),
-    },
+    update: { passwordHash },
+    create: { email, name: "Администратор", passwordHash },
   });
 
   // Удаляем старые сидовые товары навсегда

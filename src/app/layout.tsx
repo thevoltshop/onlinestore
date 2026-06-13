@@ -3,8 +3,22 @@ import "./globals.css";
 import { ThemeProvider } from "@/components/ThemeProvider";
 
 export const metadata: Metadata = {
-  title: "THE ARX — Интернет-магазин",
-  description: "THE ARX — электроника, гаджеты, одежда и аксессуары",
+  title: {
+    default: "THE ARX — Интернет-магазин в Узбекистане",
+    template: "%s | THE ARX",
+  },
+  description: "THE ARX — интернет-магазин в Узбекистане. Игровая периферия, товары для авто, электроника и аксессуары с доставкой по всему Узбекистану.",
+  keywords: ["интернет-магазин Узбекистан", "купить электронику Ташкент", "игровая периферия Узбекистан", "товары для авто Ташкент", "THE ARX"],
+  authors: [{ name: "THE ARX" }],
+  openGraph: {
+    title: "THE ARX — Интернет-магазин в Узбекистане",
+    description: "Игровая периферия, товары для авто, электроника и аксессуары с доставкой по всему Узбекистану.",
+    url: "https://onlinestore-indol-seven.vercel.app",
+    siteName: "THE ARX",
+    locale: "ru_RU",
+    type: "website",
+  },
+  robots: { index: true, follow: true },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

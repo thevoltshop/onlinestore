@@ -37,15 +37,6 @@ export function MobileNav() {
               {item.label}
             </Link>
           ))}
-          <a
-            href="https://thevoltshop.github.io/my-site"
-            target="_blank"
-            rel="noopener noreferrer"
-            onClick={() => setOpen(false)}
-            className="block rounded-lg px-4 py-2.5 text-sm font-medium hover:bg-border"
-          >
-            Помощь
-          </a>
         </div>
       )}
     </div>
